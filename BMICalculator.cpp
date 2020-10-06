@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-#define METRIC = 1;
-#define IMPERIAL = 2;
+#define METRIC 1
+#define IMPERIAL 2
 
-int getMetricBMI() {
+int getMetricBMI(float weight, float height) {
     return 0;
 }
 
@@ -12,7 +12,7 @@ int getImperialBMI() {
     return 0;
 }
 
-bool isPositiveNum(float value) {
+bool isPositiveNum(const float value) {
     if (value > 0)
         return true;
 
@@ -26,7 +26,7 @@ void errorMessage() {
     cin.ignore(10000, '\n');
 }
 
-void getCorrectInput(float value) {
+float getCorrectInput(float value) {
 
     errorMessage();
     cin >> value;
@@ -37,17 +37,17 @@ void getCorrectInput(float value) {
     }
 }
 
-void manageUnitChoice(int unitChoice, float weight, float height) {
+void getWeightAndHeight(const int unitChoice, float &weight, float &height) {
 
     cout << (unitChoice == METRIC) ? "Please enter weight(kg): " : "Please enter weight(lb):";
     cin >> weight;
     if (isPositiveNum(weight))
-        getCorrectInput(weight);
+        weight = getCorrectInput(weight);
 
     cout << (unitChoice == METRIC) ? "Please enter height(m): " : "Please enter height(in):";
     cin >> height;
     if (isPositiveNum(height))
-        getCorrectInput(height);
+        height = getCorrectInput(height);
 }
 
 int main() {
@@ -62,7 +62,7 @@ int main() {
 
     cin >> unitChoice;
 
-    while (unitChoice != 1 && unitChoice != 2) {
+    while (unitChoice != METRIC && unitChoice != IMPERIAL) {
         cout << "Please enter either 1 or 2\n";
         cin.clear();
         cin.ignore(10000, '\n');
