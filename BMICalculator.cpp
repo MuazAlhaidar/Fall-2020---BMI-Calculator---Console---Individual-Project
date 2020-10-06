@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+#define METRIC = 1;
+#define IMPERIAL = 2;
+
 int getMetricBMI() {
     return 0;
 }
@@ -25,6 +28,9 @@ void errorMessage() {
 
 void getCorrectInput(float value) {
 
+    errorMessage();
+    cin >> value;
+
     while (!isPositiveNum(value)) {
         errorMessage();
         cin >> value;
@@ -33,12 +39,12 @@ void getCorrectInput(float value) {
 
 void manageUnitChoice(int unitChoice, float weight, float height) {
 
-    cout << (unitChoice == 1) ? "Please enter weight(kg): " : "Please enter weight(lb):";
+    cout << (unitChoice == METRIC) ? "Please enter weight(kg): " : "Please enter weight(lb):";
     cin >> weight;
     if (isPositiveNum(weight))
         getCorrectInput(weight);
 
-    cout << (unitChoice == 1) ? "Please enter height(m): " : "Please enter height(in):";
+    cout << (unitChoice == METRIC) ? "Please enter height(m): " : "Please enter height(in):";
     cin >> height;
     if (isPositiveNum(height))
         getCorrectInput(height);
@@ -51,7 +57,8 @@ int main() {
 
     cout << "Welcome to my BMI Calculator\n";
     cout << "Please pick your units of measurement:\n";
-    cout << "\t1. Imperical\n\t2. Metric\n";
+    cout << "\t1. Imperical\n";
+    cout << "\t2. Metric\n";
 
     cin >> unitChoice;
 
