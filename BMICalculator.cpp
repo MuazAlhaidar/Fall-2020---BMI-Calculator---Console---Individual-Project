@@ -4,6 +4,48 @@
 #define METRIC 1
 #define IMPERIAL 2
 
+bool isPositiveNum(const float value);
+
+void clearInputStream();
+void errorMessage();
+void displayBMICatagory(const float bmi);
+void getWeightAndHeight(const int unitChoice, float &weight, float &height);
+
+float getCorrectInput(float value);
+float getMetricBMI(const float weight, const float height);
+float getImperialBMI(const float weight, const float height);
+
+int main() {
+
+    float weight = 0, height = 0;
+    int unitChoice = 0;
+
+    std::cout << "Welcome to my BMI Calculator\n";
+    std::cout << "Please pick your units of measurement:\n";
+    std::cout << "\t1. Metric\n";
+    std::cout << "\t2. Imperial\n";
+
+    std::cin >> unitChoice;
+
+    while (unitChoice != METRIC && unitChoice != IMPERIAL) {
+        std::cout << "Please enter either 1 or 2\n";
+        clearInputStream();
+        std::cin >> unitChoice;
+    }
+
+    getWeightAndHeight(unitChoice, weight, height);
+
+    float userBMI = ((unitChoice == METRIC) ? getMetricBMI(weight, height) : getImperialBMI(weight, height));
+
+    std::cout << "Your BMI is: ";
+    std::cout << std::setprecision(3);
+    std::cout << userBMI << std::endl;
+
+    displayBMICatagory(userBMI);
+
+    return 0;
+}
+
 bool isPositiveNum(const float value) {
     if (value > 0)
         return true;
@@ -23,6 +65,19 @@ void errorMessage() {
 }
 
 void displayBMICatagory(const float bmi) {
+
+    std::cout << "You are ";
+
+    if (bmi < 18.5f)
+        std::cout << "underweight";
+    else if (bmi >= 18.5f && bmi < 25.0f)
+        std::cout << "normal weight";
+    else if (bmi >= 25.0f && bmi < 30.0f)
+        std::cout << "overweight";
+    else
+        std::cout << "obese";
+
+    std::cout << std::endl;
 }
 
 void getWeightAndHeight(const int unitChoice, float &weight, float &height) {
@@ -59,35 +114,4 @@ float getMetricBMI(const float weight, const float height) {
 
 float getImperialBMI(const float weight, const float height) {
     return 703 * (weight / (height * height));
-}
-
-int main() {
-
-    float weight = 0, height = 0;
-    int unitChoice = 0;
-
-    std::cout << "Welcome to my BMI Calculator\n";
-    std::cout << "Please pick your units of measurement:\n";
-    std::cout << "\t1. Metric\n";
-    std::cout << "\t2. Imperial\n";
-
-    std::cin >> unitChoice;
-
-    while (unitChoice != METRIC && unitChoice != IMPERIAL) {
-        std::cout << "Please enter either 1 or 2\n";
-        clearInputStream();
-        std::cin >> unitChoice;
-    }
-
-    getWeightAndHeight(unitChoice, weight, height);
-
-    float userBMI = ((unitChoice == METRIC) ? getMetricBMI(weight, height) : getImperialBMI(weight, height));
-
-    std::cout << "Your BMI is: ";
-    std::cout << std::setprecision(3);
-    std::cout << userBMI;
-
-    displayBMICatagory(userBMI);
-
-    return 0;
 }
