@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <iostream>
+#include <limits>
 
 #define METRIC 1
 #define IMPERIAL 2
@@ -55,13 +56,12 @@ bool isPositiveNum(const float value) {
 
 void clearInputStream() {
     std::cin.clear();
-    std::cin.ignore(10000, '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void errorMessage() {
     std::cout << "ERROR:NUMBER NOT IN RANGE\n";
-    std::cout << "Please enter a Number Greater than 0\n ";
-    clearInputStream();
+    std::cout << "Please enter a Number Greater than 0: ";
 }
 
 void displayBMICatagory(const float bmi) {
@@ -97,12 +97,10 @@ void getWeightAndHeight(const int unitChoice, float &weight, float &height) {
 
 float getCorrectInput(float value) {
 
-    errorMessage();
-    std::cin >> value;
-
     while (!isPositiveNum(value)) {
         errorMessage();
         std::cin >> value;
+        clearInputStream();
     }
 
     return value;
